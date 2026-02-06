@@ -2,17 +2,21 @@ import { View, Button, StyleSheet } from "react-native";
 import { useState } from "react";
 
 import Board from "@/components/Board";
-import { generateTetrimino } from "@/game/generateTetrimino";
+import { generateFilledBoard } from "@/game/generateFullBoard";
 
 export default function TetriminoScreen() {
-  const [shape, setShape] = useState(generateTetrimino());
+  const [state, setState] = useState(generateFilledBoard());
 
   return (
     <View style={styles.container}>
-      <Board blob={shape} />
+      <Board
+        blob={state.blob}
+        pieces={state.pieces}
+        gridSize={state.gridSize}
+      />
       <Button
-        title="Generate New Tetrimino"
-        onPress={() => setShape(generateTetrimino())}
+        title="Generate New Board"
+        onPress={() => setState(generateFilledBoard())}
       />
     </View>
   );

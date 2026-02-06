@@ -1,5 +1,6 @@
-import { Cell } from "./types";
+import { Cell, PlacedPiece } from "./types";
 import { generateTetrimino } from "./generateTetrimino";
+import { fillBlobWithTetriminos } from "./fillBlobWithTetriminos";
 
 const GRID_SIZE = 9;
 const MIN_BLOB = 43;
@@ -9,6 +10,11 @@ const PIECE_COUNT = 10; // tweak later
 export type BlobResult = {
   blob: Cell[];
   pieces: Cell[][];
+};
+
+export type FilledBlobResult = {
+  blob: Cell[];
+  pieces: PlacedPiece[];
 };
 
 /**
@@ -58,6 +64,24 @@ export function generateBlob(): BlobResult {
     blob: Array.from(blob).map(parseKey),
     pieces,
   };
+}
+
+/**
+ * Generates a blob mask and fills it with randomly generated pieces.
+ */
+export function generateFilledBlob(
+  maxAttempts: number = 60
+): FilledBlobResult {
+  for (let i = 0; i < maxAttempts; i++) {
+    const { blob } = generateBlob();
+    const pieces =
+      fillBlobWithTetriminos(blob, { maxRestarts: 120 });
+    if (pieces) {
+      return { blob, pieces };
+    }
+  }
+
+  return { blob: [], pieces: [] };
 }
 
 /* ---------- helpers ---------- */
