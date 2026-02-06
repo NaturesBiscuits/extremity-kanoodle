@@ -7,9 +7,11 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Button
-        title="Go to Tetrimino Generator"
+        title="Play Infinite"
         onPress={() => router.push("/tetrimino")}
       />
+      <View style={styles.buttonSpacer} />
+      <Button title="Settings" onPress={() => router.push("/settings")} />
     </View>
   );
 }
@@ -19,5 +21,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  buttonSpacer: {
+    height: 12,
   },
 });
